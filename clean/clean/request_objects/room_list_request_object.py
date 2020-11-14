@@ -32,6 +32,7 @@ class RoomListRequestObject(ValidRequestObject):
         invalid_req = InvalidRequestObject()
         if 'filters' in adict:
             if not isinstance(adict['filters'], collections.abc.Mapping):
+                invalid_req.add_error('filters', 'Is not iterable')
                 return invalid_req
             for key, value, in adict['filters'].items():
                 if key not in cls.accepted_filters:
