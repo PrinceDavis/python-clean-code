@@ -1,7 +1,7 @@
 from flask import Flask
 
-from clean.rest import room
 from clean.flask_settings import DevConfig
+from clean.rest import room
 
 
 def create_app(config_object=DevConfig):
