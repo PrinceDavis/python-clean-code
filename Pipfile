@@ -16,8 +16,10 @@ flake8 = "*"
 cryptography = "*"
 pyyaml = "*"
 Sphinx = "*"
+pytest-flask = "*"
 
 [packages]
+flask = "*"
 
 [requires]
 python_version = "3.8"
