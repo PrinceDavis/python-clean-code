@@ -1,4 +1,4 @@
-import collections
+import collections.abc
 
 
 class InvalidRequestObject:
@@ -31,7 +31,7 @@ class RoomListRequestObject(ValidRequestObject):
     def from_dict(cls, adict):
         invalid_req = InvalidRequestObject()
         if 'filters' in adict:
-            if not isinstance(adict['filters'], collections.Mapping):
+            if not isinstance(adict['filters'], collections.abc.Mapping):
                 return invalid_req
             for key, value, in adict['filters'].items():
                 if key not in cls.accepted_filters:

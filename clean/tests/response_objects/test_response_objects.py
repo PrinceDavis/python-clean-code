@@ -43,7 +43,6 @@ def test_response_failure_has_type_and_message(response_type, response_message):
 
 def test_response_failure_contains_value(response_type, response_message):
     response = res.ResponseFailure(response_type, response_message)
-
     assert response.value == {
         'type': response_type, 'message': response_message
     }
@@ -52,14 +51,13 @@ def test_response_failure_contains_value(response_type, response_message):
 def test_response_failure_initialisation_with_exception(response_type):
     response = res.ResponseFailure(
         response_type, Exception('Just an error message'))
-
     assert bool(response) is False
     assert response.type == response_type
     assert response.message == 'Exception: Just an error message'
 
 
 def test_response_failure_from_empty_invalid_request_from_invalid_request_object():
-    reponse = res.ResponseFailure.build_from_invalid_request_object(
+    response = res.ResponseFailure.build_from_invalid_request_object(
         req.InvalidRequestObject())
 
     assert bool(response) is False
@@ -88,7 +86,7 @@ def test_response_failure_build_resource_error():
 
 
 def test_response_failure_build_parameters_error():
-    response = res.ResponseFailure.build_parameters_eror("test message")
+    response = res.ResponseFailure.build_parameters_error("test message")
 
     assert bool(response) is False
     assert response.type == res.ResponseFailure.PARAMETERS_ERROR
