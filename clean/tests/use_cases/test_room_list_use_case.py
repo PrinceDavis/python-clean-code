@@ -2,8 +2,9 @@ from unittest import mock
 import pytest
 import uuid
 
-from clean.domain import room as r
+from clean.request_objects import room_list_request_object as req
 from clean.use_cases import room_list_use_case as uc
+from clean.domain import room as r
 
 
 @pytest.fixture()
@@ -43,6 +44,7 @@ def test_room_list_without_parameters(domain_rooms):
     repo = mock.Mock()
     repo.list.return_value = domain_rooms
     room_list_use_case = uc.RoomListUseCase(repo)
-    result = room_list_use_case.execute()
+    request = req.RoomListRequestObject()
+    response = room_list_use_case.execute(request)
     repo.list.assert_called_with()
-    assert result == domain_rooms
+    assert response.value == domain_rooms
