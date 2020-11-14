@@ -41,6 +41,6 @@ def room_dicts():
 def test_repository_list_without_parameters(room_dicts):
     repo = memrepo.MemRepo(room_dicts)
 
-    rooms = [r.Room.from_dict(i) fro i in room_dicts]
+    rooms = [r.Room.from_dict(i) for i in room_dicts]
 
     assert repo.list() == rooms
