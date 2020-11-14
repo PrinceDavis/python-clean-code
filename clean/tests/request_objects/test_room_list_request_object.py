@@ -19,7 +19,7 @@ def test_build_room_list_request_object_from_empty_dict():
 def test_build_room_list_request_object_from_empty_dict():
     request = req.RoomListRequestObject.from_dict({})
 
-    assert request.filter is None
+    assert request.filters is None
     assert bool(request) is True
 
 
@@ -33,7 +33,7 @@ def test_build_list_request_object_with_empty_filters():
 def test_build_list_request_object_from_dict_with_empty_filter():
     request = req.RoomListRequestObject.from_dict({'filters': {}})
 
-    assert request.filter == {}
+    assert request.filters == {}
     assert bool(request) is True
 
 
@@ -47,8 +47,6 @@ def test_build_room_list_request_object_from_dict_with_filter():
 
 def test_build_room_list_request_object_from_dict_with_invalid():
     request = req.RoomListRequestObject.from_dict({'filters': 5})
-    assert request.has_errors()
-    assert request.errors[0]['parameter'] == 'filters'
     assert bool(request) is False
 
 
