@@ -1,12 +1,20 @@
 import json
 
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
 
-from clean.repository import memrepo as mr
-from clean.use_cases import room_list_use_case as uc
+from clean.request_objects import room_list_request_object as req
+from clean.response_objects import response_objects as res
 from clean.serializers import room_json_serializer as ser
+from clean.use_cases import room_list_use_case as uc
+from clean.repository import memrepo as mr
 
 blueprint = Blueprint('room', __name__)
+STATUS_CODES = {
+    res.ResponseSuccess.SUCCESS: 200,
+    res.ResponseFailure.RESOURCE_ERROR: 404,
+    res.ResponseFailure.PARAMETERS_ERROR: 400,
+    res.ResponseFailure.SYSTEM_ERROR: 500
+}
 
 room1 = {
     'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
@@ -35,10 +43,18 @@ room3 = {
 
 @blueprint.route('/rooms', methods=['GET'])
 def room():
+    qrystr_params = {
+        'filters': {},
+    }
+    for arg, values in request.args.items():
+        if arg.startswith('filter_'):
+            qrystr_params['filters'][arg.replace('filter_', '')] = values
+    request_object = req.RoomListRequestObject.from_dict(qrystr_params)
     repo = mr.MemRepo([room3, room2, room1])
     use_case = uc.RoomListUseCase(repo)
-    result = use_case.execute()
+    response = use_case.execute(request_object)
+
     return Response(
-        json.dumps(result, cls=ser.RoomJsonEncoder),
+        json.dumps(response.value, cls=ser.RoomJsonEncoder),
         mimetype='application/json',
         status=200)
