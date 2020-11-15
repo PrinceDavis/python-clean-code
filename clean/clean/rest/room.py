@@ -5,6 +5,7 @@ from flask import Blueprint, Response, request
 from clean.request_objects import room_list_request_object as req
 from clean.response_objects import response_objects as res
 from clean.serializers import room_json_serializer as ser
+from clean.repository import postgresrepo as pr
 from clean.use_cases import room_list_use_case as uc
 from clean.repository import memrepo as mr
 
@@ -16,28 +17,11 @@ STATUS_CODES = {
     res.ResponseFailure.SYSTEM_ERROR: 500
 }
 
-room1 = {
-    'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
-    'size': 215,
-    'price': 39,
-    'longitude': -0.09998975,
-    'latitude': 51.75436293,
-}
-
-room2 = {
-    'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
-    'size': 405,
-    'price': 66,
-    'longitude': 0.18228006,
-    'latitude': 51.74640997,
-}
-
-room3 = {
-    'code': '913694c6-435a-4366-ba0d-da5334a611b2',
-    'size': 56,
-    'price': 60,
-    'longitude': 0.27891577,
-    'latitude': 51.45994069,
+db_connection = {
+    'dbname': 'cleandb',
+    'user': 'postgres',
+    'password': 'cleandb',
+    'host': 'localhost'
 }
 
 
@@ -50,7 +34,7 @@ def room():
         if arg.startswith('filter_'):
             qrystr_params['filters'][arg.replace('filter_', '')] = values
     request_object = req.RoomListRequestObject.from_dict(qrystr_params)
-    repo = mr.MemRepo([room3, room2, room1])
+    repo = pr.PostgresRepo(db_connection)
     use_case = uc.RoomListUseCase(repo)
     response = use_case.execute(request_object)
 

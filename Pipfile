@@ -17,9 +17,14 @@ cryptography = "*"
 pyyaml = "*"
 Sphinx = "*"
 pytest-flask = "*"
+pytest-docker = "*"
+docker-compose = "*"
 
 [packages]
 flask = "*"
+sqlalchemy-utils = "*"
+psycopg2 = "*"
+flask-sqlalchemy = "*"
 sqlalchemy = "*"
 
 [requires]

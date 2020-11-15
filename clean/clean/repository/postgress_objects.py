@@ -11,5 +11,5 @@ class Room(Base):
     code = Column(String(36), nullable=False)
     size = Column(Integer)
     price = Column(Integer)
-    longtitude = Column(Float)
+    longitude = Column(Float)
     latitude = Column(Float)
