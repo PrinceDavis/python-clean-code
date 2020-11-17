@@ -1,35 +1,15 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-from clean.repository import memrepo as mr
-from clean.use_cases import room_list_use_case as uc
+import click
 
 
-room1 = {
-    'code': 'f853578c-fc0f-4e65-81b8-566c5dffa35a',
-    'size': 215,
-    'price': 39,
-    'longitude': -0.09998975,
-    'latitude': 51.75436293,
-}
+@click.command()
+def main(args=None):
+    """Console script for clean_code_example_one"""
+    click.echo("Replace this message by putting your code into "
+               "clean_code_example_one.cli.main")
+    click.echo("See click documentation at http://click.pocoo.org/")
 
-room2 = {
-    'code': 'fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a',
-    'size': 405,
-    'price': 66,
-    'longitude': 0.18228006,
-    'latitude': 51.74640997,
-}
 
-room3 = {
-    'code': '913694c6-435a-4366-ba0d-da5334a611b2',
-    'size': 56,
-    'price': 60,
-    'longitude': 0.27891577,
-    'latitude': 51.45994069,
-}
-
-repo = mr.MemRepo([room1, room2, room3])
-use_case = uc.RoomListUseCase(repo)
-result = use_case.execute()
-
-print([room.to_dict() for room in result])
+if __name__ == "__main__":
+    main()
